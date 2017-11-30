@@ -7,10 +7,12 @@ package controlador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import persistencia.factory.DAOFactory;
 
 /**
  *
@@ -18,6 +20,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ControladorUsuario extends HttpServlet {
 
+    private static DAOFactory fabrica;
+
+    @Override
+    public void init() throws ServletException {
+        ControladorUsuario.fabrica = DAOFactory.getFactory(TipoBD.MYSQL,
+                this.getServletContext());
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -82,5 +91,7 @@ public class ControladorUsuario extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private static final Logger LOGGER = Logger.getLogger(ControladorUsuario.class.getName());
 
 }
